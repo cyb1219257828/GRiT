@@ -47,7 +47,9 @@ class GRiTROIHeadsAndTextDecoder(CascadeROIHeads):
         self.test_task = test_task
         self.beam_size = beam_size
 
-        tokenizer = BertTokenizer.from_pretrained('bert-base-uncased', do_lower_case=True)
+        tokenizer = BertTokenizer.from_pretrained(
+            '/data1/yubo/GRiT_for_drama/models/bert-base-uncased', 
+            do_lower_case=True)
         self.tokenizer = tokenizer
 
         assert test_task in train_task, 'GRiT has not been trained on {} task, ' \

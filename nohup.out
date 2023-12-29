@@ -1,0 +1,1480 @@
+Command Line Args: Namespace(config_file='configs/GRiT_B_ObjectDet.yaml', dist_url='tcp://127.0.0.1:12345', eval_only=False, machine_rank=0, num_gpus=1, num_gpus_per_machine=4, num_machines=1, opts=[], output_dir_name='./output/grit_b_objectdet', resume=False)
+[2023-12-30 00:14:07,690] [INFO] [distributed.py:46:init_distributed] Initializing torch distributed with backend: nccl
+[12/30 00:14:12 detectron2]: Rank of current process: 0. World size: 4
+[12/30 00:14:14 detectron2]: Environment info:
+----------------------  -------------------------------------------------------------------------------------
+sys.platform            linux
+Python                  3.8.18 (default, Sep 11 2023, 13:40:15) [GCC 11.2.0]
+numpy                   1.24.4
+detectron2              0.6 @/data1/yubo/risk/detectron2/detectron2
+Compiler                GCC 11.4
+CUDA compiler           CUDA 12.2
+detectron2 arch flags   8.6
+DETECTRON2_ENV_MODULE   <not set>
+PyTorch                 1.9.0+cu111 @/data1/yubo/anaconda3/envs/risk/lib/python3.8/site-packages/torch
+PyTorch debug build     False
+GPU available           Yes
+GPU 0,1,2,3             NVIDIA GeForce RTX 4090 (arch=8.9)
+Driver version          535.86.05
+CUDA_HOME               /usr/local/cuda
+Pillow                  8.4.0
+torchvision             0.10.0+cu111 @/data1/yubo/anaconda3/envs/risk/lib/python3.8/site-packages/torchvision
+torchvision arch flags  3.5, 5.0, 6.0, 7.0, 7.5, 8.0, 8.6
+fvcore                  0.1.5.post20221221
+iopath                  0.1.9
+cv2                     4.5.5
+----------------------  -------------------------------------------------------------------------------------
+PyTorch built with:
+  - GCC 7.3
+  - C++ Version: 201402
+  - Intel(R) Math Kernel Library Version 2020.0.0 Product Build 20191122 for Intel(R) 64 architecture applications
+  - Intel(R) MKL-DNN v2.1.2 (Git Hash 98be7e8afa711dc9b66c8ff3504129cb82013cdb)
+  - OpenMP 201511 (a.k.a. OpenMP 4.5)
+  - NNPACK is enabled
+  - CPU capability usage: AVX2
+  - CUDA Runtime 11.1
+  - NVCC architecture flags: -gencode;arch=compute_37,code=sm_37;-gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86
+  - CuDNN 8.0.5
+  - Magma 2.5.2
+  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=11.1, CUDNN_VERSION=8.0.5, CXX_COMPILER=/opt/rh/devtoolset-7/root/usr/bin/c++, CXX_FLAGS= -Wno-deprecated -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -fopenmp -DNDEBUG -DUSE_KINETO -DUSE_FBGEMM -DUSE_QNNPACK -DUSE_PYTORCH_QNNPACK -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -O2 -fPIC -Wno-narrowing -Wall -Wextra -Werror=return-type -Wno-missing-field-initializers -Wno-type-limits -Wno-array-bounds -Wno-unknown-pragmas -Wno-sign-compare -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-unused-result -Wno-unused-local-typedefs -Wno-strict-overflow -Wno-strict-aliasing -Wno-error=deprecated-declarations -Wno-stringop-overflow -Wno-psabi -Wno-error=pedantic -Wno-error=redundant-decls -Wno-error=old-style-cast -fdiagnostics-color=always -faligned-new -Wno-unused-but-set-variable -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format -Wno-stringop-overflow, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_VERSION=1.9.0, USE_CUDA=ON, USE_CUDNN=ON, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=ON, USE_NNPACK=ON, USE_OPENMP=ON, 
+
+[12/30 00:14:14 detectron2]: Command line arguments: Namespace(config_file='configs/GRiT_B_ObjectDet.yaml', dist_url='tcp://127.0.0.1:12345', eval_only=False, machine_rank=0, num_gpus=1, num_gpus_per_machine=4, num_machines=1, opts=[], output_dir_name='./output/grit_b_objectdet', resume=False)
+[12/30 00:14:14 detectron2]: Contents of args.config_file=configs/GRiT_B_ObjectDet.yaml:
+_BASE_: "Base.yaml"
+MODEL:
+  TRAIN_TASK: ["ObjectDet"]
+  TEST_TASK: "ObjectDet"
+  MASK_ON: True
+  ROI_HEADS:
+    SOFT_NMS_ENABLED: True
+  BEAM_SIZE: 3
+  WEIGHTS: "detectron2://ImageNetPretrained/MAE/mae_pretrain_vit_base.pth"
+  BACKBONE:
+    NAME: build_vit_fpn_backbone
+  VIT_LAYERS: 12
+SOLVER:
+  VIT_LAYER_DECAY_RATE: 0.7
+DATASETS:
+  TRAIN: ("GRiT_coco2017_train",)
+  TEST: ("coco_2017_val",)
+DATALOADER:
+  DATASET_BS: 2
+OUTPUT_DIR: "./output/GRiT_B_ObjectDet"
+[12/30 00:14:14 detectron2]: Running with full config:
+CUDNN_BENCHMARK: false
+DATALOADER:
+  ASPECT_RATIO_GROUPING: true
+  DATASET_BS: 2
+  DATASET_INPUT_SCALE:
+  - - 0.1
+    - 2.0
+  DATASET_INPUT_SIZE:
+  - 1024
+  DATASET_MAX_SIZES:
+  - 1333
+  - 1333
+  DATASET_MIN_SIZES:
+  - &id001
+    - 640
+    - 800
+  - *id001
+  DATASET_RATIO:
+  - 1
+  FILTER_EMPTY_ANNOTATIONS: false
+  NUM_WORKERS: 8
+  REPEAT_THRESHOLD: 0.0
+  SAMPLER_TRAIN: MultiDatasetSampler
+DATASETS:
+  PRECOMPUTED_PROPOSAL_TOPK_TEST: 1000
+  PRECOMPUTED_PROPOSAL_TOPK_TRAIN: 2000
+  PROPOSAL_FILES_TEST: []
+  PROPOSAL_FILES_TRAIN: []
+  TEST:
+  - coco_2017_val
+  TRAIN:
+  - GRiT_coco2017_train
+DEBUG: false
+DEBUG_SHOW_NAME: false
+FIND_UNUSED_PARAM: true
+GLOBAL:
+  HACK: 1.0
+INPUT:
+  CROP:
+    ENABLED: false
+    SIZE:
+    - 0.9
+    - 0.9
+    TYPE: relative_range
+  CUSTOM_AUG: EfficientDetResizeCrop
+  FORMAT: RGB
+  MASK_FORMAT: polygon
+  MAX_SIZE_TEST: 1333
+  MAX_SIZE_TRAIN: 1333
+  MIN_SIZE_TEST: 800
+  MIN_SIZE_TRAIN:
+  - 800
+  MIN_SIZE_TRAIN_SAMPLING: choice
+  RANDOM_FLIP: horizontal
+  SCALE_RANGE:
+  - 0.1
+  - 2.0
+  TEST_INPUT_TYPE: default
+  TEST_SIZE: 1024
+  TRAIN_SIZE: 640
+MODEL:
+  ANCHOR_GENERATOR:
+    ANGLES:
+    - - -90
+      - 0
+      - 90
+    ASPECT_RATIOS:
+    - - 0.5
+      - 1.0
+      - 2.0
+    NAME: DefaultAnchorGenerator
+    OFFSET: 0.0
+    SIZES:
+    - - 32
+      - 64
+      - 128
+      - 256
+      - 512
+  BACKBONE:
+    FREEZE_AT: 2
+    NAME: build_vit_fpn_backbone
+  BEAM_SIZE: 3
+  BIFPN:
+    NORM: GN
+    NUM_BIFPN: 6
+    NUM_LEVELS: 5
+    OUT_CHANNELS: 160
+    SEPARABLE_CONV: false
+  CENTERNET:
+    AS_PROPOSAL: false
+    CENTER_NMS: false
+    FPN_STRIDES:
+    - 8
+    - 16
+    - 32
+    - 64
+    - 128
+    HM_FOCAL_ALPHA: 0.25
+    HM_FOCAL_BETA: 4
+    HM_MIN_OVERLAP: 0.8
+    IGNORE_HIGH_FP: 0.85
+    INFERENCE_TH: 0.0001
+    IN_FEATURES:
+    - p3
+    - p4
+    - p5
+    - p6
+    - p7
+    LOC_LOSS_TYPE: giou
+    LOSS_GAMMA: 2.0
+    MIN_RADIUS: 4
+    MORE_POS: false
+    MORE_POS_THRESH: 0.2
+    MORE_POS_TOPK: 9
+    NEG_WEIGHT: 0.5
+    NMS_TH_TEST: 0.9
+    NMS_TH_TRAIN: 0.9
+    NORM: GN
+    NOT_NMS: false
+    NOT_NORM_REG: true
+    NO_REDUCE: false
+    NUM_BOX_CONVS: 4
+    NUM_CLASSES: 1
+    NUM_CLS_CONVS: 4
+    NUM_SHARE_CONVS: 0
+    ONLY_PROPOSAL: true
+    POST_NMS_TOPK_TEST: 256
+    POST_NMS_TOPK_TRAIN: 2000
+    POS_WEIGHT: 0.5
+    PRE_NMS_TOPK_TEST: 1000
+    PRE_NMS_TOPK_TRAIN: 4000
+    PRIOR_PROB: 0.01
+    REG_WEIGHT: 1.0
+    SIGMOID_CLAMP: 0.0001
+    SOI:
+    - - 0
+      - 80
+    - - 64
+      - 160
+    - - 128
+      - 320
+    - - 256
+      - 640
+    - - 512
+      - 10000000
+    USE_DEFORMABLE: false
+    WITH_AGN_HM: true
+  DEVICE: cuda
+  DLA:
+    DLAUP_IN_FEATURES:
+    - dla3
+    - dla4
+    - dla5
+    DLAUP_NODE: conv
+    MS_OUTPUT: false
+    NORM: BN
+    NUM_LAYERS: 34
+    OUT_FEATURES:
+    - dla2
+    USE_DLA_UP: true
+  FPN:
+    FUSE_TYPE: sum
+    IN_FEATURES:
+    - layer3
+    - layer4
+    - layer5
+    NORM: ''
+    OUT_CHANNELS: 256
+  KEYPOINT_ON: false
+  LOAD_PROPOSALS: false
+  MASK_ON: true
+  META_ARCHITECTURE: GRiT
+  PANOPTIC_FPN:
+    COMBINE:
+      ENABLED: true
+      INSTANCES_CONFIDENCE_THRESH: 0.5
+      OVERLAP_THRESH: 0.5
+      STUFF_AREA_LIMIT: 4096
+    INSTANCE_LOSS_WEIGHT: 1.0
+  PIXEL_MEAN:
+  - 123.675
+  - 116.28
+  - 103.53
+  PIXEL_STD:
+  - 58.395
+  - 57.12
+  - 57.375
+  PROPOSAL_GENERATOR:
+    MIN_SIZE: 0
+    NAME: CenterNet
+  RESNETS:
+    DEFORM_MODULATED: false
+    DEFORM_NUM_GROUPS: 1
+    DEFORM_ON_PER_STAGE:
+    - false
+    - false
+    - false
+    - false
+    DEPTH: 50
+    NORM: FrozenBN
+    NUM_GROUPS: 1
+    OUT_FEATURES:
+    - res4
+    RES2_OUT_CHANNELS: 256
+    RES5_DILATION: 1
+    STEM_OUT_CHANNELS: 64
+    STRIDE_IN_1X1: true
+    WIDTH_PER_GROUP: 64
+  RETINANET:
+    BBOX_REG_LOSS_TYPE: smooth_l1
+    BBOX_REG_WEIGHTS: &id003
+    - 1.0
+    - 1.0
+    - 1.0
+    - 1.0
+    FOCAL_LOSS_ALPHA: 0.25
+    FOCAL_LOSS_GAMMA: 2.0
+    IN_FEATURES:
+    - p3
+    - p4
+    - p5
+    - p6
+    - p7
+    IOU_LABELS:
+    - 0
+    - -1
+    - 1
+    IOU_THRESHOLDS:
+    - 0.4
+    - 0.5
+    NMS_THRESH_TEST: 0.5
+    NORM: ''
+    NUM_CLASSES: 80
+    NUM_CONVS: 4
+    PRIOR_PROB: 0.01
+    SCORE_THRESH_TEST: 0.05
+    SMOOTH_L1_LOSS_BETA: 0.1
+    TOPK_CANDIDATES_TEST: 1000
+  ROI_BOX_CASCADE_HEAD:
+    BBOX_REG_WEIGHTS:
+    - &id002
+      - 10.0
+      - 10.0
+      - 5.0
+      - 5.0
+    - - 20.0
+      - 20.0
+      - 10.0
+      - 10.0
+    - - 30.0
+      - 30.0
+      - 15.0
+      - 15.0
+    IOUS:
+    - 0.6
+    - 0.7
+    - 0.8
+  ROI_BOX_HEAD:
+    BBOX_REG_LOSS_TYPE: smooth_l1
+    BBOX_REG_LOSS_WEIGHT: 1.0
+    BBOX_REG_WEIGHTS: *id002
+    CAT_FREQ_PATH: datasets/lvis/lvis_v1_train_cat_info.json
+    CLS_AGNOSTIC_BBOX_REG: true
+    CONV_DIM: 256
+    EQL_FREQ_CAT: 200
+    FC_DIM: 1024
+    FED_LOSS_FREQ_WEIGHT: 0.5
+    FED_LOSS_FREQ_WEIGHT_POWER: 0.5
+    FED_LOSS_NUM_CAT: 50
+    FED_LOSS_NUM_CLASSES: 50
+    MULT_PROPOSAL_SCORE: true
+    NAME: FastRCNNConvFCHead
+    NORM: ''
+    NUM_CONV: 0
+    NUM_FC: 2
+    POOLER_RESOLUTION: 7
+    POOLER_SAMPLING_RATIO: 0
+    POOLER_TYPE: ROIAlignV2
+    PRIOR_PROB: 0.01
+    SMOOTH_L1_BETA: 0.0
+    TRAIN_ON_PRED_BOXES: false
+    USE_BIAS: 0.0
+    USE_EQL_LOSS: false
+    USE_FED_LOSS: false
+    USE_SIGMOID_CE: false
+  ROI_HEADS:
+    BATCH_SIZE_PER_IMAGE: 512
+    IN_FEATURES:
+    - p3
+    - p4
+    - p5
+    IOU_LABELS:
+    - 0
+    - 1
+    IOU_THRESHOLDS:
+    - 0.6
+    MASK_WEIGHT: 1.0
+    NAME: GRiTROIHeadsAndTextDecoder
+    NMS_THRESH_TEST: 0.5
+    NUM_CLASSES: 1
+    OBJECT_FEAT_POOLER_RES: 14
+    POSITIVE_FRACTION: 0.25
+    PROPOSAL_APPEND_GT: true
+    SCORE_THRESH_TEST: 0.02
+    SOFT_NMS_ENABLED: true
+  ROI_KEYPOINT_HEAD:
+    CONV_DIMS:
+    - 512
+    - 512
+    - 512
+    - 512
+    - 512
+    - 512
+    - 512
+    - 512
+    LOSS_WEIGHT: 1.0
+    MIN_KEYPOINTS_PER_IMAGE: 1
+    NAME: KRCNNConvDeconvUpsampleHead
+    NORMALIZE_LOSS_BY_VISIBLE_KEYPOINTS: true
+    NUM_KEYPOINTS: 17
+    POOLER_RESOLUTION: 14
+    POOLER_SAMPLING_RATIO: 0
+    POOLER_TYPE: ROIAlignV2
+  ROI_MASK_HEAD:
+    CLS_AGNOSTIC_MASK: true
+    CONV_DIM: 256
+    NAME: MaskRCNNConvUpsampleHead
+    NORM: ''
+    NUM_CONV: 4
+    POOLER_RESOLUTION: 14
+    POOLER_SAMPLING_RATIO: 0
+    POOLER_TYPE: ROIAlignV2
+  RPN:
+    BATCH_SIZE_PER_IMAGE: 256
+    BBOX_REG_LOSS_TYPE: smooth_l1
+    BBOX_REG_LOSS_WEIGHT: 1.0
+    BBOX_REG_WEIGHTS: *id003
+    BOUNDARY_THRESH: -1
+    CONV_DIMS:
+    - -1
+    HEAD_NAME: StandardRPNHead
+    IN_FEATURES:
+    - res4
+    IOU_LABELS:
+    - 0
+    - -1
+    - 1
+    IOU_THRESHOLDS:
+    - 0.3
+    - 0.7
+    LOSS_WEIGHT: 1.0
+    NMS_THRESH: 0.7
+    POSITIVE_FRACTION: 0.5
+    POST_NMS_TOPK_TEST: 1000
+    POST_NMS_TOPK_TRAIN: 2000
+    PRE_NMS_TOPK_TEST: 6000
+    PRE_NMS_TOPK_TRAIN: 12000
+    SMOOTH_L1_BETA: 0.0
+  SEM_SEG_HEAD:
+    COMMON_STRIDE: 4
+    CONVS_DIM: 128
+    IGNORE_VALUE: 255
+    IN_FEATURES:
+    - p2
+    - p3
+    - p4
+    - p5
+    LOSS_WEIGHT: 1.0
+    NAME: SemSegFPNHead
+    NORM: GN
+    NUM_CLASSES: 54
+  TEST_TASK: ObjectDet
+  TRAIN_TASK:
+  - ObjectDet
+  VIT_LAYERS: 12
+  WEIGHTS: detectron2://ImageNetPretrained/MAE/mae_pretrain_vit_base.pth
+OUTPUT_DIR: ./output/grit_b_objectdet
+SAVE_DEBUG: false
+SAVE_PTH: false
+SEED: -1
+SOLVER:
+  AMP:
+    ENABLED: false
+  BASE_LR: 8.0e-05
+  BASE_LR_END: 0.0
+  BIAS_LR_FACTOR: 1.0
+  CHECKPOINT_PERIOD: 10000
+  CLIP_GRADIENTS:
+    CLIP_TYPE: value
+    CLIP_VALUE: 1.0
+    ENABLED: true
+    NORM_TYPE: 2.0
+  GAMMA: 0.1
+  IMS_PER_BATCH: 64
+  LR_SCHEDULER_NAME: WarmupCosineLR
+  MAX_ITER: 180000
+  MOMENTUM: 0.9
+  NESTEROV: false
+  OPTIMIZER: ADAMW
+  REFERENCE_WORLD_SIZE: 0
+  RESET_ITER: false
+  STEPS:
+  - 30000
+  TRAIN_ITER: -1
+  USE_CUSTOM_SOLVER: true
+  VIT_LAYER_DECAY: true
+  VIT_LAYER_DECAY_RATE: 0.7
+  WARMUP_FACTOR: 0.001
+  WARMUP_ITERS: 1000
+  WARMUP_METHOD: linear
+  WEIGHT_DECAY: 0.0001
+  WEIGHT_DECAY_BIAS: null
+  WEIGHT_DECAY_NORM: 0.0
+TEST:
+  AUG:
+    ENABLED: false
+    FLIP: true
+    MAX_SIZE: 4000
+    MIN_SIZES:
+    - 400
+    - 500
+    - 600
+    - 700
+    - 800
+    - 900
+    - 1000
+    - 1100
+    - 1200
+  DETECTIONS_PER_IMAGE: 256
+  EVAL_PERIOD: 0
+  EXPECTED_RESULTS: []
+  KEYPOINT_OKS_SIGMAS: []
+  PRECISE_BN:
+    ENABLED: false
+    NUM_ITER: 200
+TEXT_DECODER:
+  ATTENTION_HEADS: 12
+  FEEDFORWARD_SIZE: 3072
+  HIDDEN_SIZE: 768
+  NUM_LAYERS: 6
+  VOCAB_SIZE: 30522
+USE_ACT_CHECKPOINT: true
+VERSION: 2
+VIS_PERIOD: 0
+VIS_THRESH: 0.3
+
+[12/30 00:14:14 detectron2]: Full config saved to ./output/grit_b_objectdet/config.yaml
+[12/30 00:14:14 d2.utils.env]: Using a generated random seed 18629090
+[12/30 00:14:18 detectron2]: Model:
+GRiT(
+  (backbone): ViT_FPN(
+    (bottom_up): ViT(
+      (patch_embed): PatchEmbed(
+        (proj): Conv2d(3, 768, kernel_size=(16, 16), stride=(16, 16))
+      )
+      (blocks): ModuleList(
+        (0): Block(
+          (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (attn): Attention(
+            (qkv): Linear(in_features=768, out_features=2304, bias=True)
+            (proj): Linear(in_features=768, out_features=768, bias=True)
+          )
+          (drop_path): Identity()
+          (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (mlp): Mlp(
+            (fc1): Linear(in_features=768, out_features=3072, bias=True)
+            (act): GELU()
+            (drop1): Dropout(p=0.0, inplace=False)
+            (fc2): Linear(in_features=3072, out_features=768, bias=True)
+            (drop2): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (1): Block(
+          (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (attn): Attention(
+            (qkv): Linear(in_features=768, out_features=2304, bias=True)
+            (proj): Linear(in_features=768, out_features=768, bias=True)
+          )
+          (drop_path): DropPath(drop_prob=0.009)
+          (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (mlp): Mlp(
+            (fc1): Linear(in_features=768, out_features=3072, bias=True)
+            (act): GELU()
+            (drop1): Dropout(p=0.0, inplace=False)
+            (fc2): Linear(in_features=3072, out_features=768, bias=True)
+            (drop2): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (2): Block(
+          (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (attn): Attention(
+            (qkv): Linear(in_features=768, out_features=2304, bias=True)
+            (proj): Linear(in_features=768, out_features=768, bias=True)
+          )
+          (drop_path): DropPath(drop_prob=0.018)
+          (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (mlp): Mlp(
+            (fc1): Linear(in_features=768, out_features=3072, bias=True)
+            (act): GELU()
+            (drop1): Dropout(p=0.0, inplace=False)
+            (fc2): Linear(in_features=3072, out_features=768, bias=True)
+            (drop2): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (3): Block(
+          (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (attn): Attention(
+            (qkv): Linear(in_features=768, out_features=2304, bias=True)
+            (proj): Linear(in_features=768, out_features=768, bias=True)
+          )
+          (drop_path): DropPath(drop_prob=0.027)
+          (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (mlp): Mlp(
+            (fc1): Linear(in_features=768, out_features=3072, bias=True)
+            (act): GELU()
+            (drop1): Dropout(p=0.0, inplace=False)
+            (fc2): Linear(in_features=3072, out_features=768, bias=True)
+            (drop2): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (4): Block(
+          (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (attn): Attention(
+            (qkv): Linear(in_features=768, out_features=2304, bias=True)
+            (proj): Linear(in_features=768, out_features=768, bias=True)
+          )
+          (drop_path): DropPath(drop_prob=0.036)
+          (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (mlp): Mlp(
+            (fc1): Linear(in_features=768, out_features=3072, bias=True)
+            (act): GELU()
+            (drop1): Dropout(p=0.0, inplace=False)
+            (fc2): Linear(in_features=3072, out_features=768, bias=True)
+            (drop2): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (5): Block(
+          (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (attn): Attention(
+            (qkv): Linear(in_features=768, out_features=2304, bias=True)
+            (proj): Linear(in_features=768, out_features=768, bias=True)
+          )
+          (drop_path): DropPath(drop_prob=0.045)
+          (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (mlp): Mlp(
+            (fc1): Linear(in_features=768, out_features=3072, bias=True)
+            (act): GELU()
+            (drop1): Dropout(p=0.0, inplace=False)
+            (fc2): Linear(in_features=3072, out_features=768, bias=True)
+            (drop2): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (6): Block(
+          (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (attn): Attention(
+            (qkv): Linear(in_features=768, out_features=2304, bias=True)
+            (proj): Linear(in_features=768, out_features=768, bias=True)
+          )
+          (drop_path): DropPath(drop_prob=0.055)
+          (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (mlp): Mlp(
+            (fc1): Linear(in_features=768, out_features=3072, bias=True)
+            (act): GELU()
+            (drop1): Dropout(p=0.0, inplace=False)
+            (fc2): Linear(in_features=3072, out_features=768, bias=True)
+            (drop2): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (7): Block(
+          (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (attn): Attention(
+            (qkv): Linear(in_features=768, out_features=2304, bias=True)
+            (proj): Linear(in_features=768, out_features=768, bias=True)
+          )
+          (drop_path): DropPath(drop_prob=0.064)
+          (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (mlp): Mlp(
+            (fc1): Linear(in_features=768, out_features=3072, bias=True)
+            (act): GELU()
+            (drop1): Dropout(p=0.0, inplace=False)
+            (fc2): Linear(in_features=3072, out_features=768, bias=True)
+            (drop2): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (8): Block(
+          (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (attn): Attention(
+            (qkv): Linear(in_features=768, out_features=2304, bias=True)
+            (proj): Linear(in_features=768, out_features=768, bias=True)
+          )
+          (drop_path): DropPath(drop_prob=0.073)
+          (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (mlp): Mlp(
+            (fc1): Linear(in_features=768, out_features=3072, bias=True)
+            (act): GELU()
+            (drop1): Dropout(p=0.0, inplace=False)
+            (fc2): Linear(in_features=3072, out_features=768, bias=True)
+            (drop2): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (9): Block(
+          (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (attn): Attention(
+            (qkv): Linear(in_features=768, out_features=2304, bias=True)
+            (proj): Linear(in_features=768, out_features=768, bias=True)
+          )
+          (drop_path): DropPath(drop_prob=0.082)
+          (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (mlp): Mlp(
+            (fc1): Linear(in_features=768, out_features=3072, bias=True)
+            (act): GELU()
+            (drop1): Dropout(p=0.0, inplace=False)
+            (fc2): Linear(in_features=3072, out_features=768, bias=True)
+            (drop2): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (10): Block(
+          (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (attn): Attention(
+            (qkv): Linear(in_features=768, out_features=2304, bias=True)
+            (proj): Linear(in_features=768, out_features=768, bias=True)
+          )
+          (drop_path): DropPath(drop_prob=0.091)
+          (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (mlp): Mlp(
+            (fc1): Linear(in_features=768, out_features=3072, bias=True)
+            (act): GELU()
+            (drop1): Dropout(p=0.0, inplace=False)
+            (fc2): Linear(in_features=3072, out_features=768, bias=True)
+            (drop2): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (11): Block(
+          (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (attn): Attention(
+            (qkv): Linear(in_features=768, out_features=2304, bias=True)
+            (proj): Linear(in_features=768, out_features=768, bias=True)
+          )
+          (drop_path): DropPath(drop_prob=0.100)
+          (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (mlp): Mlp(
+            (fc1): Linear(in_features=768, out_features=3072, bias=True)
+            (act): GELU()
+            (drop1): Dropout(p=0.0, inplace=False)
+            (fc2): Linear(in_features=3072, out_features=768, bias=True)
+            (drop2): Dropout(p=0.0, inplace=False)
+          )
+        )
+      )
+    )
+    (top_block): LastLevelP6P7_P5(
+      (p6): Conv2d(256, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+      (p7): Conv2d(256, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+    )
+    (maxpool): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (fpn_stride_16_8): ConvTranspose2d(768, 768, kernel_size=(2, 2), stride=(2, 2), bias=False)
+    (fpn_stride8_conv1): Conv2d(768, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+    (fpn_stride8_norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+    (fpn_stride8_conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    (fpn_stride8_norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+    (fpn_stride16_conv1): Conv2d(768, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+    (fpn_stride16_norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+    (fpn_stride16_conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    (fpn_stride16_norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+    (fpn_stride32_conv1): Conv2d(768, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+    (fpn_stride32_norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+    (fpn_stride32_conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    (fpn_stride32_norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+  )
+  (proposal_generator): CenterNet(
+    (iou_loss): IOULoss()
+    (centernet_head): CenterNetHead(
+      (cls_tower): Sequential()
+      (bbox_tower): Sequential(
+        (0): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): GroupNorm(32, 256, eps=1e-05, affine=True)
+        (2): ReLU()
+        (3): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (4): GroupNorm(32, 256, eps=1e-05, affine=True)
+        (5): ReLU()
+        (6): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (7): GroupNorm(32, 256, eps=1e-05, affine=True)
+        (8): ReLU()
+        (9): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (10): GroupNorm(32, 256, eps=1e-05, affine=True)
+        (11): ReLU()
+      )
+      (share_tower): Sequential()
+      (bbox_pred): Conv2d(256, 4, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (scales): ModuleList(
+        (0): Scale()
+        (1): Scale()
+        (2): Scale()
+        (3): Scale()
+        (4): Scale()
+      )
+      (agn_hm): Conv2d(256, 1, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    )
+  )
+  (roi_heads): GRiTROIHeadsAndTextDecoder(
+    (box_pooler): ROIPooler(
+      (level_poolers): ModuleList(
+        (0): ROIAlign(output_size=(7, 7), spatial_scale=0.125, sampling_ratio=0, aligned=True)
+        (1): ROIAlign(output_size=(7, 7), spatial_scale=0.0625, sampling_ratio=0, aligned=True)
+        (2): ROIAlign(output_size=(7, 7), spatial_scale=0.03125, sampling_ratio=0, aligned=True)
+      )
+    )
+    (box_head): ModuleList(
+      (0): FastRCNNConvFCHead(
+        (flatten): Flatten(start_dim=1, end_dim=-1)
+        (fc1): Linear(in_features=12544, out_features=1024, bias=True)
+        (fc_relu1): ReLU()
+        (fc2): Linear(in_features=1024, out_features=1024, bias=True)
+        (fc_relu2): ReLU()
+      )
+      (1): FastRCNNConvFCHead(
+        (flatten): Flatten(start_dim=1, end_dim=-1)
+        (fc1): Linear(in_features=12544, out_features=1024, bias=True)
+        (fc_relu1): ReLU()
+        (fc2): Linear(in_features=1024, out_features=1024, bias=True)
+        (fc_relu2): ReLU()
+      )
+      (2): FastRCNNConvFCHead(
+        (flatten): Flatten(start_dim=1, end_dim=-1)
+        (fc1): Linear(in_features=12544, out_features=1024, bias=True)
+        (fc_relu1): ReLU()
+        (fc2): Linear(in_features=1024, out_features=1024, bias=True)
+        (fc_relu2): ReLU()
+      )
+    )
+    (box_predictor): ModuleList(
+      (0): GRiTFastRCNNOutputLayers(
+        (cls_score): Linear(in_features=1024, out_features=2, bias=True)
+        (bbox_pred): Sequential(
+          (0): Linear(in_features=1024, out_features=1024, bias=True)
+          (1): ReLU(inplace=True)
+          (2): Linear(in_features=1024, out_features=4, bias=True)
+        )
+      )
+      (1): GRiTFastRCNNOutputLayers(
+        (cls_score): Linear(in_features=1024, out_features=2, bias=True)
+        (bbox_pred): Sequential(
+          (0): Linear(in_features=1024, out_features=1024, bias=True)
+          (1): ReLU(inplace=True)
+          (2): Linear(in_features=1024, out_features=4, bias=True)
+        )
+      )
+      (2): GRiTFastRCNNOutputLayers(
+        (cls_score): Linear(in_features=1024, out_features=2, bias=True)
+        (bbox_pred): Sequential(
+          (0): Linear(in_features=1024, out_features=1024, bias=True)
+          (1): ReLU(inplace=True)
+          (2): Linear(in_features=1024, out_features=4, bias=True)
+        )
+      )
+    )
+    (mask_pooler): ROIPooler(
+      (level_poolers): ModuleList(
+        (0): ROIAlign(output_size=(14, 14), spatial_scale=0.125, sampling_ratio=0, aligned=True)
+        (1): ROIAlign(output_size=(14, 14), spatial_scale=0.0625, sampling_ratio=0, aligned=True)
+        (2): ROIAlign(output_size=(14, 14), spatial_scale=0.03125, sampling_ratio=0, aligned=True)
+      )
+    )
+    (mask_head): MaskRCNNConvUpsampleHead(
+      (mask_fcn1): Conv2d(
+        256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)
+        (activation): ReLU()
+      )
+      (mask_fcn2): Conv2d(
+        256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)
+        (activation): ReLU()
+      )
+      (mask_fcn3): Conv2d(
+        256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)
+        (activation): ReLU()
+      )
+      (mask_fcn4): Conv2d(
+        256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)
+        (activation): ReLU()
+      )
+      (deconv): ConvTranspose2d(256, 256, kernel_size=(2, 2), stride=(2, 2))
+      (deconv_relu): ReLU()
+      (predictor): Conv2d(256, 1, kernel_size=(1, 1), stride=(1, 1))
+    )
+    (object_feat_pooler): ROIPooler(
+      (level_poolers): ModuleList(
+        (0): ROIAlign(output_size=(14, 14), spatial_scale=0.125, sampling_ratio=0, aligned=True)
+        (1): ROIAlign(output_size=(14, 14), spatial_scale=0.0625, sampling_ratio=0, aligned=True)
+        (2): ROIAlign(output_size=(14, 14), spatial_scale=0.03125, sampling_ratio=0, aligned=True)
+      )
+    )
+    (text_decoder): GRiTTextDecoder(
+      (textual): TransformerDecoderTextualHead(
+        (object_feature_projection): Sequential(
+          (0): Linear(in_features=256, out_features=768, bias=True)
+          (1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+        )
+        (embedding): WordAndPositionalEmbedding(
+          (words): Embedding(30522, 768)
+          (positions): Embedding(1024, 768)
+          (layer_norm): LayerNorm((768,), eps=1e-08, elementwise_affine=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+        (transformer): BertEncoderAsDecoder(
+          (encoder): BertEncoder(
+            (layer): ModuleList(
+              (0): BertLayer(
+                (attention): BertAttention(
+                  (self): BertSelfAttention(
+                    (query): Linear(in_features=768, out_features=768, bias=True)
+                    (key): Linear(in_features=768, out_features=768, bias=True)
+                    (value): Linear(in_features=768, out_features=768, bias=True)
+                    (dropout): Dropout(p=0.1, inplace=False)
+                    (softmax): Softmax(dim=-1)
+                    (qk2attn): QK2Attention()
+                  )
+                  (output): BertSelfOutput(
+                    (dense): Linear(in_features=768, out_features=768, bias=True)
+                    (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+                    (dropout): Dropout(p=0.1, inplace=False)
+                  )
+                )
+                (intermediate): BertIntermediate(
+                  (dense): Linear(in_features=768, out_features=3072, bias=True)
+                )
+                (output): BertOutput(
+                  (dense): Linear(in_features=3072, out_features=768, bias=True)
+                  (dropout): Dropout(p=0.1, inplace=False)
+                  (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+                )
+              )
+              (1): BertLayer(
+                (attention): BertAttention(
+                  (self): BertSelfAttention(
+                    (query): Linear(in_features=768, out_features=768, bias=True)
+                    (key): Linear(in_features=768, out_features=768, bias=True)
+                    (value): Linear(in_features=768, out_features=768, bias=True)
+                    (dropout): Dropout(p=0.1, inplace=False)
+                    (softmax): Softmax(dim=-1)
+                    (qk2attn): QK2Attention()
+                  )
+                  (output): BertSelfOutput(
+                    (dense): Linear(in_features=768, out_features=768, bias=True)
+                    (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+                    (dropout): Dropout(p=0.1, inplace=False)
+                  )
+                )
+                (intermediate): BertIntermediate(
+                  (dense): Linear(in_features=768, out_features=3072, bias=True)
+                )
+                (output): BertOutput(
+                  (dense): Linear(in_features=3072, out_features=768, bias=True)
+                  (dropout): Dropout(p=0.1, inplace=False)
+                  (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+                )
+              )
+              (2): BertLayer(
+                (attention): BertAttention(
+                  (self): BertSelfAttention(
+                    (query): Linear(in_features=768, out_features=768, bias=True)
+                    (key): Linear(in_features=768, out_features=768, bias=True)
+                    (value): Linear(in_features=768, out_features=768, bias=True)
+                    (dropout): Dropout(p=0.1, inplace=False)
+                    (softmax): Softmax(dim=-1)
+                    (qk2attn): QK2Attention()
+                  )
+                  (output): BertSelfOutput(
+                    (dense): Linear(in_features=768, out_features=768, bias=True)
+                    (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+                    (dropout): Dropout(p=0.1, inplace=False)
+                  )
+                )
+                (intermediate): BertIntermediate(
+                  (dense): Linear(in_features=768, out_features=3072, bias=True)
+                )
+                (output): BertOutput(
+                  (dense): Linear(in_features=3072, out_features=768, bias=True)
+                  (dropout): Dropout(p=0.1, inplace=False)
+                  (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+                )
+              )
+              (3): BertLayer(
+                (attention): BertAttention(
+                  (self): BertSelfAttention(
+                    (query): Linear(in_features=768, out_features=768, bias=True)
+                    (key): Linear(in_features=768, out_features=768, bias=True)
+                    (value): Linear(in_features=768, out_features=768, bias=True)
+                    (dropout): Dropout(p=0.1, inplace=False)
+                    (softmax): Softmax(dim=-1)
+                    (qk2attn): QK2Attention()
+                  )
+                  (output): BertSelfOutput(
+                    (dense): Linear(in_features=768, out_features=768, bias=True)
+                    (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+                    (dropout): Dropout(p=0.1, inplace=False)
+                  )
+                )
+                (intermediate): BertIntermediate(
+                  (dense): Linear(in_features=768, out_features=3072, bias=True)
+                )
+                (output): BertOutput(
+                  (dense): Linear(in_features=3072, out_features=768, bias=True)
+                  (dropout): Dropout(p=0.1, inplace=False)
+                  (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+                )
+              )
+              (4): BertLayer(
+                (attention): BertAttention(
+                  (self): BertSelfAttention(
+                    (query): Linear(in_features=768, out_features=768, bias=True)
+                    (key): Linear(in_features=768, out_features=768, bias=True)
+                    (value): Linear(in_features=768, out_features=768, bias=True)
+                    (dropout): Dropout(p=0.1, inplace=False)
+                    (softmax): Softmax(dim=-1)
+                    (qk2attn): QK2Attention()
+                  )
+                  (output): BertSelfOutput(
+                    (dense): Linear(in_features=768, out_features=768, bias=True)
+                    (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+                    (dropout): Dropout(p=0.1, inplace=False)
+                  )
+                )
+                (intermediate): BertIntermediate(
+                  (dense): Linear(in_features=768, out_features=3072, bias=True)
+                )
+                (output): BertOutput(
+                  (dense): Linear(in_features=3072, out_features=768, bias=True)
+                  (dropout): Dropout(p=0.1, inplace=False)
+                  (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+                )
+              )
+              (5): BertLayer(
+                (attention): BertAttention(
+                  (self): BertSelfAttention(
+                    (query): Linear(in_features=768, out_features=768, bias=True)
+                    (key): Linear(in_features=768, out_features=768, bias=True)
+                    (value): Linear(in_features=768, out_features=768, bias=True)
+                    (dropout): Dropout(p=0.1, inplace=False)
+                    (softmax): Softmax(dim=-1)
+                    (qk2attn): QK2Attention()
+                  )
+                  (output): BertSelfOutput(
+                    (dense): Linear(in_features=768, out_features=768, bias=True)
+                    (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+                    (dropout): Dropout(p=0.1, inplace=False)
+                  )
+                )
+                (intermediate): BertIntermediate(
+                  (dense): Linear(in_features=768, out_features=3072, bias=True)
+                )
+                (output): BertOutput(
+                  (dense): Linear(in_features=3072, out_features=768, bias=True)
+                  (dropout): Dropout(p=0.1, inplace=False)
+                  (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+                )
+              )
+            )
+          )
+        )
+        (output): Linear(in_features=768, out_features=30522, bias=True)
+      )
+      (loss): SmoothLabelCrossEntropyLoss(
+        (log_soft): LogSoftmax(dim=1)
+        (kl): KLDivLoss()
+      )
+    )
+  )
+)
+[12/30 00:14:18 detectron2]: Training batch size: 8
+[12/30 00:14:18 fvcore.common.checkpoint]: [Checkpointer] Loading from detectron2://ImageNetPretrained/MAE/mae_pretrain_vit_base.pth ...
+[12/30 00:14:18 d2.checkpoint.c2_model_loading]: Following weights matched with submodule backbone.bottom_up:
+| Names in Model        | Names in Checkpoint               | Shapes               |
+|:----------------------|:----------------------------------|:---------------------|
+| blocks.0.attn.proj.*  | blocks.0.attn.proj.{bias,weight}  | (768,) (768,768)     |
+| blocks.0.attn.qkv.*   | blocks.0.attn.qkv.{bias,weight}   | (2304,) (2304,768)   |
+| blocks.0.mlp.fc1.*    | blocks.0.mlp.fc1.{bias,weight}    | (3072,) (3072,768)   |
+| blocks.0.mlp.fc2.*    | blocks.0.mlp.fc2.{bias,weight}    | (768,) (768,3072)    |
+| blocks.0.norm1.*      | blocks.0.norm1.{bias,weight}      | (768,) (768,)        |
+| blocks.0.norm2.*      | blocks.0.norm2.{bias,weight}      | (768,) (768,)        |
+| blocks.1.attn.proj.*  | blocks.1.attn.proj.{bias,weight}  | (768,) (768,768)     |
+| blocks.1.attn.qkv.*   | blocks.1.attn.qkv.{bias,weight}   | (2304,) (2304,768)   |
+| blocks.1.mlp.fc1.*    | blocks.1.mlp.fc1.{bias,weight}    | (3072,) (3072,768)   |
+| blocks.1.mlp.fc2.*    | blocks.1.mlp.fc2.{bias,weight}    | (768,) (768,3072)    |
+| blocks.1.norm1.*      | blocks.1.norm1.{bias,weight}      | (768,) (768,)        |
+| blocks.1.norm2.*      | blocks.1.norm2.{bias,weight}      | (768,) (768,)        |
+| blocks.10.attn.proj.* | blocks.10.attn.proj.{bias,weight} | (768,) (768,768)     |
+| blocks.10.attn.qkv.*  | blocks.10.attn.qkv.{bias,weight}  | (2304,) (2304,768)   |
+| blocks.10.mlp.fc1.*   | blocks.10.mlp.fc1.{bias,weight}   | (3072,) (3072,768)   |
+| blocks.10.mlp.fc2.*   | blocks.10.mlp.fc2.{bias,weight}   | (768,) (768,3072)    |
+| blocks.10.norm1.*     | blocks.10.norm1.{bias,weight}     | (768,) (768,)        |
+| blocks.10.norm2.*     | blocks.10.norm2.{bias,weight}     | (768,) (768,)        |
+| blocks.11.attn.proj.* | blocks.11.attn.proj.{bias,weight} | (768,) (768,768)     |
+| blocks.11.attn.qkv.*  | blocks.11.attn.qkv.{bias,weight}  | (2304,) (2304,768)   |
+| blocks.11.mlp.fc1.*   | blocks.11.mlp.fc1.{bias,weight}   | (3072,) (3072,768)   |
+| blocks.11.mlp.fc2.*   | blocks.11.mlp.fc2.{bias,weight}   | (768,) (768,3072)    |
+| blocks.11.norm1.*     | blocks.11.norm1.{bias,weight}     | (768,) (768,)        |
+| blocks.11.norm2.*     | blocks.11.norm2.{bias,weight}     | (768,) (768,)        |
+| blocks.2.attn.proj.*  | blocks.2.attn.proj.{bias,weight}  | (768,) (768,768)     |
+| blocks.2.attn.qkv.*   | blocks.2.attn.qkv.{bias,weight}   | (2304,) (2304,768)   |
+| blocks.2.mlp.fc1.*    | blocks.2.mlp.fc1.{bias,weight}    | (3072,) (3072,768)   |
+| blocks.2.mlp.fc2.*    | blocks.2.mlp.fc2.{bias,weight}    | (768,) (768,3072)    |
+| blocks.2.norm1.*      | blocks.2.norm1.{bias,weight}      | (768,) (768,)        |
+| blocks.2.norm2.*      | blocks.2.norm2.{bias,weight}      | (768,) (768,)        |
+| blocks.3.attn.proj.*  | blocks.3.attn.proj.{bias,weight}  | (768,) (768,768)     |
+| blocks.3.attn.qkv.*   | blocks.3.attn.qkv.{bias,weight}   | (2304,) (2304,768)   |
+| blocks.3.mlp.fc1.*    | blocks.3.mlp.fc1.{bias,weight}    | (3072,) (3072,768)   |
+| blocks.3.mlp.fc2.*    | blocks.3.mlp.fc2.{bias,weight}    | (768,) (768,3072)    |
+| blocks.3.norm1.*      | blocks.3.norm1.{bias,weight}      | (768,) (768,)        |
+| blocks.3.norm2.*      | blocks.3.norm2.{bias,weight}      | (768,) (768,)        |
+| blocks.4.attn.proj.*  | blocks.4.attn.proj.{bias,weight}  | (768,) (768,768)     |
+| blocks.4.attn.qkv.*   | blocks.4.attn.qkv.{bias,weight}   | (2304,) (2304,768)   |
+| blocks.4.mlp.fc1.*    | blocks.4.mlp.fc1.{bias,weight}    | (3072,) (3072,768)   |
+| blocks.4.mlp.fc2.*    | blocks.4.mlp.fc2.{bias,weight}    | (768,) (768,3072)    |
+| blocks.4.norm1.*      | blocks.4.norm1.{bias,weight}      | (768,) (768,)        |
+| blocks.4.norm2.*      | blocks.4.norm2.{bias,weight}      | (768,) (768,)        |
+| blocks.5.attn.proj.*  | blocks.5.attn.proj.{bias,weight}  | (768,) (768,768)     |
+| blocks.5.attn.qkv.*   | blocks.5.attn.qkv.{bias,weight}   | (2304,) (2304,768)   |
+| blocks.5.mlp.fc1.*    | blocks.5.mlp.fc1.{bias,weight}    | (3072,) (3072,768)   |
+| blocks.5.mlp.fc2.*    | blocks.5.mlp.fc2.{bias,weight}    | (768,) (768,3072)    |
+| blocks.5.norm1.*      | blocks.5.norm1.{bias,weight}      | (768,) (768,)        |
+| blocks.5.norm2.*      | blocks.5.norm2.{bias,weight}      | (768,) (768,)        |
+| blocks.6.attn.proj.*  | blocks.6.attn.proj.{bias,weight}  | (768,) (768,768)     |
+| blocks.6.attn.qkv.*   | blocks.6.attn.qkv.{bias,weight}   | (2304,) (2304,768)   |
+| blocks.6.mlp.fc1.*    | blocks.6.mlp.fc1.{bias,weight}    | (3072,) (3072,768)   |
+| blocks.6.mlp.fc2.*    | blocks.6.mlp.fc2.{bias,weight}    | (768,) (768,3072)    |
+| blocks.6.norm1.*      | blocks.6.norm1.{bias,weight}      | (768,) (768,)        |
+| blocks.6.norm2.*      | blocks.6.norm2.{bias,weight}      | (768,) (768,)        |
+| blocks.7.attn.proj.*  | blocks.7.attn.proj.{bias,weight}  | (768,) (768,768)     |
+| blocks.7.attn.qkv.*   | blocks.7.attn.qkv.{bias,weight}   | (2304,) (2304,768)   |
+| blocks.7.mlp.fc1.*    | blocks.7.mlp.fc1.{bias,weight}    | (3072,) (3072,768)   |
+| blocks.7.mlp.fc2.*    | blocks.7.mlp.fc2.{bias,weight}    | (768,) (768,3072)    |
+| blocks.7.norm1.*      | blocks.7.norm1.{bias,weight}      | (768,) (768,)        |
+| blocks.7.norm2.*      | blocks.7.norm2.{bias,weight}      | (768,) (768,)        |
+| blocks.8.attn.proj.*  | blocks.8.attn.proj.{bias,weight}  | (768,) (768,768)     |
+| blocks.8.attn.qkv.*   | blocks.8.attn.qkv.{bias,weight}   | (2304,) (2304,768)   |
+| blocks.8.mlp.fc1.*    | blocks.8.mlp.fc1.{bias,weight}    | (3072,) (3072,768)   |
+| blocks.8.mlp.fc2.*    | blocks.8.mlp.fc2.{bias,weight}    | (768,) (768,3072)    |
+| blocks.8.norm1.*      | blocks.8.norm1.{bias,weight}      | (768,) (768,)        |
+| blocks.8.norm2.*      | blocks.8.norm2.{bias,weight}      | (768,) (768,)        |
+| blocks.9.attn.proj.*  | blocks.9.attn.proj.{bias,weight}  | (768,) (768,768)     |
+| blocks.9.attn.qkv.*   | blocks.9.attn.qkv.{bias,weight}   | (2304,) (2304,768)   |
+| blocks.9.mlp.fc1.*    | blocks.9.mlp.fc1.{bias,weight}    | (3072,) (3072,768)   |
+| blocks.9.mlp.fc2.*    | blocks.9.mlp.fc2.{bias,weight}    | (768,) (768,3072)    |
+| blocks.9.norm1.*      | blocks.9.norm1.{bias,weight}      | (768,) (768,)        |
+| blocks.9.norm2.*      | blocks.9.norm2.{bias,weight}      | (768,) (768,)        |
+| patch_embed.proj.*    | patch_embed.proj.{bias,weight}    | (768,) (768,3,16,16) |
+| pos_embed             | pos_embed                         | (1, 197, 768)        |
+WARNING [12/30 00:14:18 fvcore.common.checkpoint]: Some model parameters or buffers are not found in the checkpoint:
+backbone.bottom_up.blocks.0.attn.{rel_pos_h, rel_pos_w}
+backbone.bottom_up.blocks.1.attn.{rel_pos_h, rel_pos_w}
+backbone.bottom_up.blocks.10.attn.{rel_pos_h, rel_pos_w}
+backbone.bottom_up.blocks.11.attn.{rel_pos_h, rel_pos_w}
+backbone.bottom_up.blocks.2.attn.{rel_pos_h, rel_pos_w}
+backbone.bottom_up.blocks.3.attn.{rel_pos_h, rel_pos_w}
+backbone.bottom_up.blocks.4.attn.{rel_pos_h, rel_pos_w}
+backbone.bottom_up.blocks.5.attn.{rel_pos_h, rel_pos_w}
+backbone.bottom_up.blocks.6.attn.{rel_pos_h, rel_pos_w}
+backbone.bottom_up.blocks.7.attn.{rel_pos_h, rel_pos_w}
+backbone.bottom_up.blocks.8.attn.{rel_pos_h, rel_pos_w}
+backbone.bottom_up.blocks.9.attn.{rel_pos_h, rel_pos_w}
+backbone.fpn_stride16_conv1.weight
+backbone.fpn_stride16_conv2.weight
+backbone.fpn_stride16_norm1.{bias, weight}
+backbone.fpn_stride16_norm2.{bias, weight}
+backbone.fpn_stride32_conv1.weight
+backbone.fpn_stride32_conv2.weight
+backbone.fpn_stride32_norm1.{bias, weight}
+backbone.fpn_stride32_norm2.{bias, weight}
+backbone.fpn_stride8_conv1.weight
+backbone.fpn_stride8_conv2.weight
+backbone.fpn_stride8_norm1.{bias, weight}
+backbone.fpn_stride8_norm2.{bias, weight}
+backbone.fpn_stride_16_8.weight
+backbone.top_block.p6.{bias, weight}
+backbone.top_block.p7.{bias, weight}
+proposal_generator.centernet_head.agn_hm.{bias, weight}
+proposal_generator.centernet_head.bbox_pred.{bias, weight}
+proposal_generator.centernet_head.bbox_tower.0.{bias, weight}
+proposal_generator.centernet_head.bbox_tower.1.{bias, weight}
+proposal_generator.centernet_head.bbox_tower.10.{bias, weight}
+proposal_generator.centernet_head.bbox_tower.3.{bias, weight}
+proposal_generator.centernet_head.bbox_tower.4.{bias, weight}
+proposal_generator.centernet_head.bbox_tower.6.{bias, weight}
+proposal_generator.centernet_head.bbox_tower.7.{bias, weight}
+proposal_generator.centernet_head.bbox_tower.9.{bias, weight}
+proposal_generator.centernet_head.scales.0.scale
+proposal_generator.centernet_head.scales.1.scale
+proposal_generator.centernet_head.scales.2.scale
+proposal_generator.centernet_head.scales.3.scale
+proposal_generator.centernet_head.scales.4.scale
+roi_heads.box_head.0.fc1.{bias, weight}
+roi_heads.box_head.0.fc2.{bias, weight}
+roi_heads.box_head.1.fc1.{bias, weight}
+roi_heads.box_head.1.fc2.{bias, weight}
+roi_heads.box_head.2.fc1.{bias, weight}
+roi_heads.box_head.2.fc2.{bias, weight}
+roi_heads.box_predictor.0.bbox_pred.0.{bias, weight}
+roi_heads.box_predictor.0.bbox_pred.2.{bias, weight}
+roi_heads.box_predictor.0.cls_score.{bias, weight}
+roi_heads.box_predictor.1.bbox_pred.0.{bias, weight}
+roi_heads.box_predictor.1.bbox_pred.2.{bias, weight}
+roi_heads.box_predictor.1.cls_score.{bias, weight}
+roi_heads.box_predictor.2.bbox_pred.0.{bias, weight}
+roi_heads.box_predictor.2.bbox_pred.2.{bias, weight}
+roi_heads.box_predictor.2.cls_score.{bias, weight}
+roi_heads.mask_head.deconv.{bias, weight}
+roi_heads.mask_head.mask_fcn1.{bias, weight}
+roi_heads.mask_head.mask_fcn2.{bias, weight}
+roi_heads.mask_head.mask_fcn3.{bias, weight}
+roi_heads.mask_head.mask_fcn4.{bias, weight}
+roi_heads.mask_head.predictor.{bias, weight}
+roi_heads.text_decoder.textual.embedding.layer_norm.{bias, weight}
+roi_heads.text_decoder.textual.embedding.positions.weight
+roi_heads.text_decoder.textual.embedding.words.weight
+roi_heads.text_decoder.textual.object_feature_projection.0.{bias, weight}
+roi_heads.text_decoder.textual.object_feature_projection.1.{bias, weight}
+roi_heads.text_decoder.textual.output.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.0.attention.output.LayerNorm.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.0.attention.output.dense.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.0.attention.self.key.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.0.attention.self.query.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.0.attention.self.value.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.0.intermediate.dense.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.0.output.LayerNorm.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.0.output.dense.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.1.attention.output.LayerNorm.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.1.attention.output.dense.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.1.attention.self.key.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.1.attention.self.query.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.1.attention.self.value.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.1.intermediate.dense.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.1.output.LayerNorm.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.1.output.dense.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.2.attention.output.LayerNorm.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.2.attention.output.dense.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.2.attention.self.key.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.2.attention.self.query.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.2.attention.self.value.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.2.intermediate.dense.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.2.output.LayerNorm.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.2.output.dense.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.3.attention.output.LayerNorm.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.3.attention.output.dense.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.3.attention.self.key.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.3.attention.self.query.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.3.attention.self.value.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.3.intermediate.dense.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.3.output.LayerNorm.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.3.output.dense.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.4.attention.output.LayerNorm.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.4.attention.output.dense.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.4.attention.self.key.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.4.attention.self.query.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.4.attention.self.value.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.4.intermediate.dense.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.4.output.LayerNorm.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.4.output.dense.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.5.attention.output.LayerNorm.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.5.attention.output.dense.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.5.attention.self.key.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.5.attention.self.query.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.5.attention.self.value.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.5.intermediate.dense.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.5.output.LayerNorm.{bias, weight}
+roi_heads.text_decoder.textual.transformer.encoder.layer.5.output.dense.{bias, weight}
+WARNING [12/30 00:14:18 fvcore.common.checkpoint]: The checkpoint state_dict contains keys that are not used by the model:
+  cls_token
+  norm.{bias, weight}
+[2023-12-30 00:14:18,324] [INFO] [logging.py:69:log_dist] [Rank 0] DeepSpeed info: version=0.6.0, git-hash=unknown, git-branch=unknown
+[2023-12-30 00:14:18,556] [INFO] [engine.py:277:__init__] DeepSpeed Flops Profiler Enabled: False
+[2023-12-30 00:14:18,556] [INFO] [engine.py:1050:_configure_optimizer] Removing param_group that has no 'params' in the client Optimizer
+[2023-12-30 00:14:18,556] [INFO] [engine.py:1056:_configure_optimizer] Using client Optimizer as basic optimizer
+[2023-12-30 00:14:18,606] [INFO] [engine.py:1072:_configure_optimizer] DeepSpeed Basic Optimizer = AdamWWithGradientClip
+[2023-12-30 00:14:18,606] [INFO] [utils.py:48:is_zero_supported_optimizer] Checking ZeRO support for optimizer=AdamWWithGradientClip type=<class 'detectron2.solver.build.AdamWWithGradientClip'>
+[2023-12-30 00:14:18,606] [WARNING] [engine.py:1085:_configure_optimizer] **** You are using ZeRO with an untested optimizer, proceed with caution *****
+[2023-12-30 00:14:18,606] [INFO] [logging.py:69:log_dist] [Rank 0] Creating fp16 ZeRO stage 1 optimizer
+[2023-12-30 00:14:18,606] [INFO] [stage_1_and_2.py:125:__init__] Reduce bucket size 500000000
+[2023-12-30 00:14:18,606] [INFO] [stage_1_and_2.py:126:__init__] Allgather bucket size 500000000
+[2023-12-30 00:14:18,606] [INFO] [stage_1_and_2.py:127:__init__] CPU Offload: False
+[2023-12-30 00:14:18,606] [INFO] [stage_1_and_2.py:128:__init__] Round robin gradient partitioning: False
+Using /data1/yubo/.cache/torch_extensions as PyTorch extensions root...
+Emitting ninja build file /data1/yubo/.cache/torch_extensions/utils/build.ninja...
+Building extension module utils...
+Allowing ninja to set a default number of workers... (overridable by setting the environment variable MAX_JOBS=N)
+ninja: no work to do.
+Using /data1/yubo/.cache/torch_extensions as PyTorch extensions root...
+Loading extension module utils...
+Time to load utils op: 0.5034966468811035 seconds
+Rank: 0 partition count [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4] and sizes[(37824, False), (147456, False), (192, False), (192, False), (192, False), (432, False), (432, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (432, False), (432, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (2032, False), (2032, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (432, False), (432, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (432, False), (432, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (2032, False), (2032, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (432, False), (432, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (432, False), (432, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (2032, False), (2032, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (432, False), (432, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (432, False), (432, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (2032, False), (2032, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (147456, False), (64, False), (147456, False), (64, False), (589824, False), (49152, False), (64, False), (64, False), (147456, False), (64, False), (64, False), (49152, False), (64, False), (64, False), (147456, False), (64, False), (64, False), (49152, False), (64, False), (64, False), (147456, False), (64, False), (64, False), (147456, False), (64, False), (64, False), (64, False), (147456, False), (64, False), (64, False), (64, False), (147456, False), (64, False), (64, False), (64, False), (147456, False), (64, False), (64, False), (64, False), (2304, False), (2, False), (2, False), (2, False), (2, False), (2, False), (2, False), (576, False), (2, False), (3211264, False), (256, False), (262144, False), (256, False), (3211264, False), (256, False), (262144, False), (256, False), (3211264, False), (256, False), (262144, False), (256, False), (512, False), (2, False), (262144, False), (256, False), (1024, False), (2, False), (512, False), (2, False), (262144, False), (256, False), (1024, False), (2, False), (512, False), (2, False), (262144, False), (256, False), (1024, False), (2, False), (147456, False), (64, False), (147456, False), (64, False), (147456, False), (64, False), (147456, False), (64, False), (65536, False), (64, False), (64, False), (2, False), (49152, False), (192, False), (192, False), (192, False), (5860224, False), (196608, False), (192, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (7632, False)] 
+[2023-12-30 00:14:19,428] [INFO] [utils.py:824:see_memory_usage] Before initializing optimizer states
+[2023-12-30 00:14:19,429] [INFO] [utils.py:825:see_memory_usage] MA 0.6 GB         Max_MA 0.78 GB         CA 0.91 GB         Max_CA 1 GB 
+[2023-12-30 00:14:19,429] [INFO] [utils.py:833:see_memory_usage] CPU Virtual Memory:  used = 53.81 GB, percent = 10.7%
+[2023-12-30 00:14:19,537] [INFO] [utils.py:824:see_memory_usage] After initializing optimizer states
+[2023-12-30 00:14:19,538] [INFO] [utils.py:825:see_memory_usage] MA 0.99 GB         Max_MA 1.19 GB         CA 1.25 GB         Max_CA 1 GB 
+[2023-12-30 00:14:19,538] [INFO] [utils.py:833:see_memory_usage] CPU Virtual Memory:  used = 54.42 GB, percent = 10.8%
+[2023-12-30 00:14:19,538] [INFO] [stage_1_and_2.py:497:__init__] optimizer state initialized
+[2023-12-30 00:14:19,602] [INFO] [utils.py:824:see_memory_usage] After initializing ZeRO optimizer
+[2023-12-30 00:14:19,602] [INFO] [utils.py:825:see_memory_usage] MA 0.99 GB         Max_MA 0.99 GB         CA 1.25 GB         Max_CA 1 GB 
+[2023-12-30 00:14:19,602] [INFO] [utils.py:833:see_memory_usage] CPU Virtual Memory:  used = 54.79 GB, percent = 10.9%
+[2023-12-30 00:14:19,602] [INFO] [logging.py:69:log_dist] [Rank 0] DeepSpeed Final Optimizer = AdamWWithGradientClip
+[2023-12-30 00:14:19,603] [INFO] [engine.py:786:_configure_lr_scheduler] DeepSpeed using client LR scheduler
+[2023-12-30 00:14:19,603] [INFO] [logging.py:69:log_dist] [Rank 0] DeepSpeed LR Scheduler = <detectron2.solver.lr_scheduler.LRMultiplier object at 0x7f4d252348e0>
+[2023-12-30 00:14:19,603] [INFO] [logging.py:69:log_dist] [Rank 0] step=0, skipped=0, lr=[7.751120832559994e-10, 7.751120832559994e-10, 7.751120832559994e-10, 1.1073029760799993e-09, 1.1073029760799993e-09, 1.1073029760799993e-09, 1.1073029760799993e-09, 1.1073029760799993e-09, 1.1073029760799993e-09, 1.1073029760799993e-09, 1.1073029760799993e-09, 1.1073029760799993e-09, 1.1073029760799993e-09, 1.1073029760799993e-09, 1.1073029760799993e-09, 1.1073029760799993e-09, 1.1073029760799993e-09, 1.5818613943999992e-09, 1.5818613943999992e-09, 1.5818613943999992e-09, 1.5818613943999992e-09, 1.5818613943999992e-09, 1.5818613943999992e-09, 1.5818613943999992e-09, 1.5818613943999992e-09, 1.5818613943999992e-09, 1.5818613943999992e-09, 1.5818613943999992e-09, 1.5818613943999992e-09, 1.5818613943999992e-09, 1.5818613943999992e-09, 2.2598019919999986e-09, 2.2598019919999986e-09, 2.2598019919999986e-09, 2.2598019919999986e-09, 2.2598019919999986e-09, 2.2598019919999986e-09, 2.2598019919999986e-09, 2.2598019919999986e-09, 2.2598019919999986e-09, 2.2598019919999986e-09, 2.2598019919999986e-09, 2.2598019919999986e-09, 2.2598019919999986e-09, 2.2598019919999986e-09, 3.2282885599999984e-09, 3.2282885599999984e-09, 3.2282885599999984e-09, 3.2282885599999984e-09, 3.2282885599999984e-09, 3.2282885599999984e-09, 3.2282885599999984e-09, 3.2282885599999984e-09, 3.2282885599999984e-09, 3.2282885599999984e-09, 3.2282885599999984e-09, 3.2282885599999984e-09, 3.2282885599999984e-09, 3.2282885599999984e-09, 4.6118407999999974e-09, 4.6118407999999974e-09, 4.6118407999999974e-09, 4.6118407999999974e-09, 4.6118407999999974e-09, 4.6118407999999974e-09, 4.6118407999999974e-09, 4.6118407999999974e-09, 4.6118407999999974e-09, 4.6118407999999974e-09, 4.6118407999999974e-09, 4.6118407999999974e-09, 4.6118407999999974e-09, 4.6118407999999974e-09, 6.588343999999998e-09, 6.588343999999998e-09, 6.588343999999998e-09, 6.588343999999998e-09, 6.588343999999998e-09, 6.588343999999998e-09, 6.588343999999998e-09, 6.588343999999998e-09, 6.588343999999998e-09, 6.588343999999998e-09, 6.588343999999998e-09, 6.588343999999998e-09, 6.588343999999998e-09, 6.588343999999998e-09, 9.41192e-09, 9.41192e-09, 9.41192e-09, 9.41192e-09, 9.41192e-09, 9.41192e-09, 9.41192e-09, 9.41192e-09, 9.41192e-09, 9.41192e-09, 9.41192e-09, 9.41192e-09, 9.41192e-09, 9.41192e-09, 1.3445599999999997e-08, 1.3445599999999997e-08, 1.3445599999999997e-08, 1.3445599999999997e-08, 1.3445599999999997e-08, 1.3445599999999997e-08, 1.3445599999999997e-08, 1.3445599999999997e-08, 1.3445599999999997e-08, 1.3445599999999997e-08, 1.3445599999999997e-08, 1.3445599999999997e-08, 1.3445599999999997e-08, 1.3445599999999997e-08, 1.9207999999999996e-08, 1.9207999999999996e-08, 1.9207999999999996e-08, 1.9207999999999996e-08, 1.9207999999999996e-08, 1.9207999999999996e-08, 1.9207999999999996e-08, 1.9207999999999996e-08, 1.9207999999999996e-08, 1.9207999999999996e-08, 1.9207999999999996e-08, 1.9207999999999996e-08, 1.9207999999999996e-08, 1.9207999999999996e-08, 2.7439999999999996e-08, 2.7439999999999996e-08, 2.7439999999999996e-08, 2.7439999999999996e-08, 2.7439999999999996e-08, 2.7439999999999996e-08, 2.7439999999999996e-08, 2.7439999999999996e-08, 2.7439999999999996e-08, 2.7439999999999996e-08, 2.7439999999999996e-08, 2.7439999999999996e-08, 2.7439999999999996e-08, 2.7439999999999996e-08, 3.92e-08, 3.92e-08, 3.92e-08, 3.92e-08, 3.92e-08, 3.92e-08, 3.92e-08, 3.92e-08, 3.92e-08, 3.92e-08, 3.92e-08, 3.92e-08, 3.92e-08, 3.92e-08, 5.6e-08, 5.6e-08, 5.6e-08, 5.6e-08, 5.6e-08, 5.6e-08, 5.6e-08, 5.6e-08, 5.6e-08, 5.6e-08, 5.6e-08, 5.6e-08, 5.6e-08, 5.6e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08, 8e-08], mom=[(0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999), (0.9, 0.999)]
+[2023-12-30 00:14:19,604] [INFO] [config.py:1058:print] DeepSpeedEngine configuration:
+[2023-12-30 00:14:19,604] [INFO] [config.py:1062:print]   activation_checkpointing_config  {
+    "partition_activations": false, 
+    "contiguous_memory_optimization": false, 
+    "cpu_checkpointing": false, 
+    "number_checkpoints": null, 
+    "synchronize_checkpoint_boundary": false, 
+    "profile": false
+}
+[2023-12-30 00:14:19,604] [INFO] [config.py:1062:print]   aio_config ................... {'block_size': 1048576, 'queue_depth': 8, 'thread_count': 1, 'single_submit': False, 'overlap_events': True}
+[2023-12-30 00:14:19,604] [INFO] [config.py:1062:print]   amp_enabled .................. False
+[2023-12-30 00:14:19,604] [INFO] [config.py:1062:print]   amp_params ................... False
+[2023-12-30 00:14:19,604] [INFO] [config.py:1062:print]   autotuning_config ............ {
+    "enabled": false, 
+    "start_step": null, 
+    "end_step": null, 
+    "metric_path": null, 
+    "arg_mappings": null, 
+    "metric": "throughput", 
+    "model_info": null, 
+    "results_dir": null, 
+    "exps_dir": null, 
+    "overwrite": true, 
+    "fast": true, 
+    "start_profile_step": 3, 
+    "end_profile_step": 5, 
+    "tuner_type": "gridsearch", 
+    "tuner_early_stopping": 5, 
+    "tuner_num_trials": 50, 
+    "model_info_path": null, 
+    "mp_size": 1, 
+    "max_train_batch_size": null, 
+    "min_train_batch_size": 1, 
+    "max_train_micro_batch_size_per_gpu": 1.024000e+03, 
+    "min_train_micro_batch_size_per_gpu": 1, 
+    "num_tuning_micro_batch_sizes": 3
+}
+[2023-12-30 00:14:19,604] [INFO] [config.py:1062:print]   bfloat16_enabled ............. False
+[2023-12-30 00:14:19,604] [INFO] [config.py:1062:print]   checkpoint_tag_validation_enabled  True
+[2023-12-30 00:14:19,604] [INFO] [config.py:1062:print]   checkpoint_tag_validation_fail  False
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   communication_data_type ...... None
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   curriculum_enabled ........... False
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   curriculum_params ............ False
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   dataloader_drop_last ......... False
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   disable_allgather ............ False
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   dump_state ................... False
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   dynamic_loss_scale_args ...... None
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   eigenvalue_enabled ........... False
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   eigenvalue_gas_boundary_resolution  1
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   eigenvalue_layer_name ........ bert.encoder.layer
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   eigenvalue_layer_num ......... 0
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   eigenvalue_max_iter .......... 100
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   eigenvalue_stability ......... 1e-06
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   eigenvalue_tol ............... 0.01
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   eigenvalue_verbose ........... False
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   elasticity_enabled ........... False
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   flops_profiler_config ........ {
+    "enabled": false, 
+    "profile_step": 1, 
+    "module_depth": -1, 
+    "top_modules": 1, 
+    "detailed": true, 
+    "output_file": null
+}
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   fp16_enabled ................. True
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   fp16_master_weights_and_gradients  False
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   fp16_mixed_quantize .......... False
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   global_rank .................. 0
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   gradient_accumulation_steps .. 1
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   gradient_clipping ............ 0.0
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   gradient_predivide_factor .... 1.0
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   initial_dynamic_scale ........ 4294967296
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   loss_scale ................... 0
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   memory_breakdown ............. False
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   optimizer_legacy_fusion ...... False
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   optimizer_name ............... None
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   optimizer_params ............. None
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   pipeline ..................... {'stages': 'auto', 'partition': 'best', 'seed_layers': False, 'activation_checkpoint_interval': 0}
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   pld_enabled .................. False
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   pld_params ................... False
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   prescale_gradients ........... False
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   quantize_change_rate ......... 0.001
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   quantize_groups .............. 1
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   quantize_offset .............. 1000
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   quantize_period .............. 1000
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   quantize_rounding ............ 0
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   quantize_start_bits .......... 16
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   quantize_target_bits ......... 8
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   quantize_training_enabled .... False
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   quantize_type ................ 0
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   quantize_verbose ............. False
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   scheduler_name ............... None
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   scheduler_params ............. None
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   sparse_attention ............. None
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   sparse_gradients_enabled ..... False
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   steps_per_print .............. 100000000
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   tensorboard_enabled .......... False
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   tensorboard_job_name ......... DeepSpeedJobName
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   tensorboard_output_path ...... 
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   train_batch_size ............. 8
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   train_micro_batch_size_per_gpu  2
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   use_quantizer_kernel ......... False
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   wall_clock_breakdown ......... False
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   world_size ................... 4
+[2023-12-30 00:14:19,605] [INFO] [config.py:1062:print]   zero_allow_untested_optimizer  True
+[2023-12-30 00:14:19,606] [INFO] [config.py:1062:print]   zero_config .................. {
+    "stage": 1, 
+    "contiguous_gradients": true, 
+    "reduce_scatter": true, 
+    "reduce_bucket_size": 5.000000e+08, 
+    "allgather_partitions": true, 
+    "allgather_bucket_size": 5.000000e+08, 
+    "overlap_comm": false, 
+    "load_from_fp32_weights": true, 
+    "elastic_checkpoint": false, 
+    "offload_param": null, 
+    "offload_optimizer": null, 
+    "sub_group_size": 1.000000e+09, 
+    "prefetch_bucket_size": 5.000000e+07, 
+    "param_persistence_threshold": 1.000000e+05, 
+    "max_live_parameters": 1.000000e+09, 
+    "max_reuse_distance": 1.000000e+09, 
+    "gather_16bit_weights_on_model_save": false, 
+    "ignore_unused_parameters": true, 
+    "round_robin_gradients": false, 
+    "legacy_stage1": false
+}
+[2023-12-30 00:14:19,606] [INFO] [config.py:1062:print]   zero_enabled ................. True
+[2023-12-30 00:14:19,606] [INFO] [config.py:1062:print]   zero_optimization_stage ...... 1
+[2023-12-30 00:14:19,606] [INFO] [config.py:1064:print]   json = {
+    "train_batch_size": 8, 
+    "steps_per_print": 1.000000e+08, 
+    "logging": {
+        "steps_per_print": 2.000000e+05
+    }, 
+    "zero_optimization": {
+        "stage": 1
+    }, 
+    "zero_allow_untested_optimizer": true, 
+    "fp16": {
+        "enabled": true
+    }, 
+    "flops_profiler": {
+        "enabled": false, 
+        "profile_step": 1, 
+        "module_depth": -1, 
+        "top_modules": 1, 
+        "detailed": true
+    }
+}
+Using /data1/yubo/.cache/torch_extensions as PyTorch extensions root...
+No modifications detected for re-loaded extension module utils, skipping build step...
+Loading extension module utils...
+Time to load utils op: 0.00024390220642089844 seconds
+[12/30 00:14:19 d2.data.dataset_mapper]: [DatasetMapper] Augmentations used in training: [<grit.data.transforms.custom_augmentation_impl.EfficientDetResizeCrop object at 0x7f4d1c310e50>, RandomFlip()]
+[12/30 00:14:32] grit.data.datasets.grit_coco INFO: Loading datasets/coco/annotations/instances_train2017.json takes 13.16 seconds.
+[12/30 00:14:33] grit.data.datasets.grit_coco INFO: Loaded 118287 images in the LVIS v1 format from datasets/coco/annotations/instances_train2017.json
+dataset sizes [117266]
+[12/30 00:14:39 d2.data.common]: Serializing 117266 elements to byte tensors and concatenating them all ...
+[12/30 00:14:42 d2.data.common]: Serialized dataset takes 445.39 MiB
+[12/30 00:14:44 detectron2]: Starting training from iteration 0
+Loading extension module utils...
+Time to load utils op: 0.46568846702575684 seconds
+Rank: 2 partition count [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4] and sizes[(37824, False), (147456, False), (192, False), (192, False), (192, False), (432, False), (432, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (432, False), (432, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (2032, False), (2032, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (432, False), (432, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (432, False), (432, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (2032, False), (2032, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (432, False), (432, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (432, False), (432, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (2032, False), (2032, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (432, False), (432, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (432, False), (432, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (2032, False), (2032, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (147456, False), (64, False), (147456, False), (64, False), (589824, False), (49152, False), (64, False), (64, False), (147456, False), (64, False), (64, False), (49152, False), (64, False), (64, False), (147456, False), (64, False), (64, False), (49152, False), (64, False), (64, False), (147456, False), (64, False), (64, False), (147456, False), (64, False), (64, False), (64, False), (147456, False), (64, False), (64, False), (64, False), (147456, False), (64, False), (64, False), (64, False), (147456, False), (64, False), (64, False), (64, False), (2304, False), (2, False), (2, False), (2, False), (2, False), (2, False), (2, False), (576, False), (2, False), (3211264, False), (256, False), (262144, False), (256, False), (3211264, False), (256, False), (262144, False), (256, False), (3211264, False), (256, False), (262144, False), (256, False), (512, False), (2, False), (262144, False), (256, False), (1024, False), (2, False), (512, False), (2, False), (262144, False), (256, False), (1024, False), (2, False), (512, False), (2, False), (262144, False), (256, False), (1024, False), (2, False), (147456, False), (64, False), (147456, False), (64, False), (147456, False), (64, False), (147456, False), (64, False), (65536, False), (64, False), (64, False), (2, False), (49152, False), (192, False), (192, False), (192, False), (5860224, False), (196608, False), (192, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (7632, False)] 
+Using /data1/yubo/.cache/torch_extensions as PyTorch extensions root...
+No modifications detected for re-loaded extension module utils, skipping build step...
+Loading extension module utils...
+Time to load utils op: 0.0003314018249511719 seconds
+dataset sizes [117266]
+Using /data1/yubo/.cache/torch_extensions as PyTorch extensions root...
+Loading extension module utils...
+Time to load utils op: 0.502918004989624 seconds
+Rank: 1 partition count [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4] and sizes[(37824, False), (147456, False), (192, False), (192, False), (192, False), (432, False), (432, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (432, False), (432, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (2032, False), (2032, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (432, False), (432, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (432, False), (432, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (2032, False), (2032, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (432, False), (432, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (432, False), (432, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (2032, False), (2032, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (432, False), (432, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (432, False), (432, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (2032, False), (2032, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (147456, False), (64, False), (147456, False), (64, False), (589824, False), (49152, False), (64, False), (64, False), (147456, False), (64, False), (64, False), (49152, False), (64, False), (64, False), (147456, False), (64, False), (64, False), (49152, False), (64, False), (64, False), (147456, False), (64, False), (64, False), (147456, False), (64, False), (64, False), (64, False), (147456, False), (64, False), (64, False), (64, False), (147456, False), (64, False), (64, False), (64, False), (147456, False), (64, False), (64, False), (64, False), (2304, False), (2, False), (2, False), (2, False), (2, False), (2, False), (2, False), (576, False), (2, False), (3211264, False), (256, False), (262144, False), (256, False), (3211264, False), (256, False), (262144, False), (256, False), (3211264, False), (256, False), (262144, False), (256, False), (512, False), (2, False), (262144, False), (256, False), (1024, False), (2, False), (512, False), (2, False), (262144, False), (256, False), (1024, False), (2, False), (512, False), (2, False), (262144, False), (256, False), (1024, False), (2, False), (147456, False), (64, False), (147456, False), (64, False), (147456, False), (64, False), (147456, False), (64, False), (65536, False), (64, False), (64, False), (2, False), (49152, False), (192, False), (192, False), (192, False), (5860224, False), (196608, False), (192, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (7632, False)] 
+Using /data1/yubo/.cache/torch_extensions as PyTorch extensions root...
+No modifications detected for re-loaded extension module utils, skipping build step...
+Loading extension module utils...
+Time to load utils op: 0.0002791881561279297 seconds
+dataset sizes [117266]
+Using /data1/yubo/.cache/torch_extensions as PyTorch extensions root...
+Loading extension module utils...
+Time to load utils op: 0.5026211738586426 seconds
+Rank: 3 partition count [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4] and sizes[(37824, False), (147456, False), (192, False), (192, False), (192, False), (432, False), (432, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (432, False), (432, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (2032, False), (2032, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (432, False), (432, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (432, False), (432, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (2032, False), (2032, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (432, False), (432, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (432, False), (432, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (2032, False), (2032, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (432, False), (432, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (432, False), (432, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (2032, False), (2032, False), (442368, False), (576, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (147456, False), (64, False), (147456, False), (64, False), (589824, False), (49152, False), (64, False), (64, False), (147456, False), (64, False), (64, False), (49152, False), (64, False), (64, False), (147456, False), (64, False), (64, False), (49152, False), (64, False), (64, False), (147456, False), (64, False), (64, False), (147456, False), (64, False), (64, False), (64, False), (147456, False), (64, False), (64, False), (64, False), (147456, False), (64, False), (64, False), (64, False), (147456, False), (64, False), (64, False), (64, False), (2304, False), (2, False), (2, False), (2, False), (2, False), (2, False), (2, False), (576, False), (2, False), (3211264, False), (256, False), (262144, False), (256, False), (3211264, False), (256, False), (262144, False), (256, False), (3211264, False), (256, False), (262144, False), (256, False), (512, False), (2, False), (262144, False), (256, False), (1024, False), (2, False), (512, False), (2, False), (262144, False), (256, False), (1024, False), (2, False), (512, False), (2, False), (262144, False), (256, False), (1024, False), (2, False), (147456, False), (64, False), (147456, False), (64, False), (147456, False), (64, False), (147456, False), (64, False), (65536, False), (64, False), (64, False), (2, False), (49152, False), (192, False), (192, False), (192, False), (5860224, False), (196608, False), (192, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (147456, False), (192, False), (192, False), (192, False), (589824, False), (768, False), (589824, False), (192, False), (192, False), (192, False), (7632, False)] 
+Using /data1/yubo/.cache/torch_extensions as PyTorch extensions root...
+No modifications detected for re-loaded extension module utils, skipping build step...
+Loading extension module utils...
+Time to load utils op: 0.00028324127197265625 seconds
+dataset sizes [117266]
+[2023-12-30 00:15:08,342] [INFO] [stage_1_and_2.py:1652:step] [deepscale] OVERFLOW! Rank 0 Skipping step. Attempted loss scale: 4294967296, reducing to 2147483648.0
+[2023-12-30 00:15:08,862] [INFO] [stage_1_and_2.py:1652:step] [deepscale] OVERFLOW! Rank 0 Skipping step. Attempted loss scale: 2147483648.0, reducing to 1073741824.0
+[2023-12-30 00:15:09,375] [INFO] [stage_1_and_2.py:1652:step] [deepscale] OVERFLOW! Rank 0 Skipping step. Attempted loss scale: 1073741824.0, reducing to 536870912.0
+[2023-12-30 00:15:09,910] [INFO] [stage_1_and_2.py:1652:step] [deepscale] OVERFLOW! Rank 0 Skipping step. Attempted loss scale: 536870912.0, reducing to 268435456.0
+[2023-12-30 00:15:10,451] [INFO] [stage_1_and_2.py:1652:step] [deepscale] OVERFLOW! Rank 0 Skipping step. Attempted loss scale: 268435456.0, reducing to 134217728.0
+[2023-12-30 00:15:10,994] [INFO] [stage_1_and_2.py:1652:step] [deepscale] OVERFLOW! Rank 0 Skipping step. Attempted loss scale: 134217728.0, reducing to 67108864.0
+[2023-12-30 00:15:11,512] [INFO] [stage_1_and_2.py:1652:step] [deepscale] OVERFLOW! Rank 0 Skipping step. Attempted loss scale: 67108864.0, reducing to 33554432.0
+[2023-12-30 00:15:12,034] [INFO] [stage_1_and_2.py:1652:step] [deepscale] OVERFLOW! Rank 0 Skipping step. Attempted loss scale: 33554432.0, reducing to 16777216.0
+[2023-12-30 00:15:12,542] [INFO] [stage_1_and_2.py:1652:step] [deepscale] OVERFLOW! Rank 0 Skipping step. Attempted loss scale: 16777216.0, reducing to 8388608.0
+[2023-12-30 00:15:13,056] [INFO] [stage_1_and_2.py:1652:step] [deepscale] OVERFLOW! Rank 0 Skipping step. Attempted loss scale: 8388608.0, reducing to 4194304.0
+[2023-12-30 00:15:13,572] [INFO] [stage_1_and_2.py:1652:step] [deepscale] OVERFLOW! Rank 0 Skipping step. Attempted loss scale: 4194304.0, reducing to 2097152.0
+[2023-12-30 00:15:14,081] [INFO] [stage_1_and_2.py:1652:step] [deepscale] OVERFLOW! Rank 0 Skipping step. Attempted loss scale: 2097152.0, reducing to 1048576.0
+[2023-12-30 00:15:14,623] [INFO] [stage_1_and_2.py:1652:step] [deepscale] OVERFLOW! Rank 0 Skipping step. Attempted loss scale: 1048576.0, reducing to 524288.0
+[2023-12-30 00:15:15,133] [INFO] [stage_1_and_2.py:1652:step] [deepscale] OVERFLOW! Rank 0 Skipping step. Attempted loss scale: 524288.0, reducing to 262144.0
+[2023-12-30 00:15:15,694] [INFO] [stage_1_and_2.py:1652:step] [deepscale] OVERFLOW! Rank 0 Skipping step. Attempted loss scale: 262144.0, reducing to 131072.0
+[2023-12-30 00:15:16,221] [INFO] [stage_1_and_2.py:1652:step] [deepscale] OVERFLOW! Rank 0 Skipping step. Attempted loss scale: 131072.0, reducing to 65536.0
+[2023-12-30 00:15:16,792] [INFO] [stage_1_and_2.py:1652:step] [deepscale] OVERFLOW! Rank 0 Skipping step. Attempted loss scale: 65536.0, reducing to 32768.0
+[2023-12-30 00:15:17,326] [INFO] [stage_1_and_2.py:1652:step] [deepscale] OVERFLOW! Rank 0 Skipping step. Attempted loss scale: 32768.0, reducing to 16384.0
+[12/30 00:15:18 d2.utils.events]:  eta: 1 day, 2:16:10  iter: 20  total_loss: 13.22  loss_box_reg_stage0: 0.01565  loss_box_reg_stage1: 0.01763  loss_box_reg_stage2: 0.00675  loss_centernet_agn_neg: 0.0003287  loss_centernet_agn_pos: 0.6128  loss_centernet_loc: 0.7542  loss_cls_stage0: 0.6406  loss_cls_stage1: 0.6382  loss_cls_stage2: 0.6953  loss_mask: 0.6934  text_decoder_loss: 9.125  time: 0.5816  data_time: 1.1544  lr: 2.3237e-09  max_mem: 5420M
+[12/30 00:15:33 d2.utils.events]:  eta: 1 day, 11:32:22  iter: 40  total_loss: 12.83  loss_box_reg_stage0: 0.01693  loss_box_reg_stage1: 0.02177  loss_box_reg_stage2: 0.005674  loss_centernet_agn_neg: 0.0004286  loss_centernet_agn_pos: 0.5989  loss_centernet_loc: 0.7779  loss_cls_stage0: 0.5928  loss_cls_stage1: 0.5862  loss_cls_stage2: 0.6454  loss_mask: 0.6934  text_decoder_loss: 8.934  time: 0.6549  data_time: 0.0071  lr: 1.7809e-08  max_mem: 5420M
+[12/30 00:15:48 d2.utils.events]:  eta: 1 day, 12:07:21  iter: 60  total_loss: 10.77  loss_box_reg_stage0: 0.05067  loss_box_reg_stage1: 0.04798  loss_box_reg_stage2: 0.01312  loss_centernet_agn_neg: 0.003538  loss_centernet_agn_pos: 0.4858  loss_centernet_loc: 0.7574  loss_cls_stage0: 0.3569  loss_cls_stage1: 0.3609  loss_cls_stage2: 0.4077  loss_mask: 0.6931  text_decoder_loss: 7.642  time: 0.6841  data_time: 0.0076  lr: 3.3295e-08  max_mem: 5420M
+[12/30 00:16:03 d2.utils.events]:  eta: 1 day, 12:33:32  iter: 80  total_loss: 7.951  loss_box_reg_stage0: 0.08715  loss_box_reg_stage1: 0.1007  loss_box_reg_stage2: 0.03754  loss_centernet_agn_neg: 0.04125  loss_centernet_agn_pos: 0.3584  loss_centernet_loc: 0.733  loss_cls_stage0: 0.2152  loss_cls_stage1: 0.186  loss_cls_stage2: 0.1688  loss_mask: 0.6925  text_decoder_loss: 5.286  time: 0.7025  data_time: 0.0063  lr: 4.878e-08  max_mem: 5420M
+[12/30 00:16:19 d2.utils.events]:  eta: 1 day, 12:58:47  iter: 100  total_loss: 6.723  loss_box_reg_stage0: 0.08939  loss_box_reg_stage1: 0.1065  loss_box_reg_stage2: 0.03928  loss_centernet_agn_neg: 0.03813  loss_centernet_agn_pos: 0.3549  loss_centernet_loc: 0.7257  loss_cls_stage0: 0.193  loss_cls_stage1: 0.1609  loss_cls_stage2: 0.1133  loss_mask: 0.6911  text_decoder_loss: 4.194  time: 0.7138  data_time: 0.0063  lr: 6.4266e-08  max_mem: 5420M
+[12/30 00:16:34 d2.utils.events]:  eta: 1 day, 13:07:29  iter: 120  total_loss: 6.15  loss_box_reg_stage0: 0.07653  loss_box_reg_stage1: 0.09654  loss_box_reg_stage2: 0.029  loss_centernet_agn_neg: 0.04258  loss_centernet_agn_pos: 0.3278  loss_centernet_loc: 0.7077  loss_cls_stage0: 0.1789  loss_cls_stage1: 0.1377  loss_cls_stage2: 0.09591  loss_mask: 0.6888  text_decoder_loss: 3.682  time: 0.7213  data_time: 0.0069  lr: 7.9751e-08  max_mem: 5420M
+[12/30 00:16:49 d2.utils.events]:  eta: 1 day, 13:15:01  iter: 140  total_loss: 5.959  loss_box_reg_stage0: 0.08097  loss_box_reg_stage1: 0.05908  loss_box_reg_stage2: 0.01494  loss_centernet_agn_neg: 0.03846  loss_centernet_agn_pos: 0.3069  loss_centernet_loc: 0.662  loss_cls_stage0: 0.1581  loss_cls_stage1: 0.1248  loss_cls_stage2: 0.09688  loss_mask: 0.6824  text_decoder_loss: 3.726  time: 0.7268  data_time: 0.0083  lr: 9.5237e-08  max_mem: 5420M
+[12/30 00:17:04 d2.utils.events]:  eta: 1 day, 13:21:41  iter: 160  total_loss: 5.622  loss_box_reg_stage0: 0.07352  loss_box_reg_stage1: 0.0544  loss_box_reg_stage2: 0.01555  loss_centernet_agn_neg: 0.04682  loss_centernet_agn_pos: 0.2988  loss_centernet_loc: 0.6289  loss_cls_stage0: 0.157  loss_cls_stage1: 0.1332  loss_cls_stage2: 0.0941  loss_mask: 0.68  text_decoder_loss: 3.356  time: 0.7298  data_time: 0.0074  lr: 1.1072e-07  max_mem: 5420M
+[2023-12-30 00:17:10,125] [INFO] [stage_1_and_2.py:1652:step] [deepscale] OVERFLOW! Rank 0 Skipping step. Attempted loss scale: 16384.0, reducing to 8192.0

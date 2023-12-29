@@ -47,7 +47,8 @@ from grit.custom_solver import build_custom_optimizer
 from grit.evaluation.eval import GRiTCOCOEvaluator, GRiTVGEvaluator
 import deepspeed
 from lauch_deepspeed import launch_deepspeed, launch_deepspeed_multinodes
-
+import warnings
+warnings.filterwarnings("ignore")
 
 logger = logging.getLogger("detectron2")
 
