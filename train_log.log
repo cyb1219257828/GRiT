@@ -5,3 +5,5 @@ CUDA_VISIBLE_DEVICES=4,5,6,7 nohup python train_deepspeed.py --num-gpus-per-mach
 CUDA_VISIBLE_DEVICES=4,5,6,7 nohup python train_deepspeed_drama.py
 
 CUDA_VISIBLE_DEVICES=4,5,6,7 nohup python train_deepspeed.py --num-gpus-per-machine 4 --config-file configs/GRiT_B_DenseCap_drama.yaml --output-dir-name ./output/20240101_drama_b_densecap
+
+CUDA_VISIBLE_DEVICES=4,5,6,7 nohup python train_deepspeed.py --num-gpus-per-machine 4 --config-file configs/GRiT_B_DenseCap_drama.yaml --output-dir-name ./output/20240101_1804_drama_b_densecap
