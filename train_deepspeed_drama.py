@@ -50,7 +50,10 @@ from lauch_deepspeed import launch_deepspeed, launch_deepspeed_multinodes
 import warnings
 warnings.filterwarnings("ignore")
 
+os.environ["CUDA_VISIBLE_DEVICES"] = '4,5,6,7'
+
 logger = logging.getLogger("detectron2")
+
 
 def do_test(cfg, model):
     results = OrderedDict()
@@ -220,7 +223,8 @@ def setup(args):
     cfg = get_cfg()
     add_centernet_config(cfg)
     add_grit_config(cfg)
-    cfg.merge_from_file(args.config_file)
+    # cfg.merge_from_file(args.config_file)
+    cfg.merge_from_file('configs/GRiT_B_DenseCap_drama.yaml')
     cfg.merge_from_list(args.opts)
     if args.output_dir_name:
         cfg.OUTPUT_DIR = args.output_dir_name
@@ -254,8 +258,8 @@ def main(args):
 
 if __name__ == "__main__":
     args = default_argument_parser()
-    args.add_argument("--output-dir-name", type=str, default='./output/GRiT')
-    args.add_argument("--num-gpus-per-machine", type=int, default=8)
+    args.add_argument("--output-dir-name", type=str, default='./output/drama_b_densecap')
+    args.add_argument("--num-gpus-per-machine", type=int, default=4)
     args = args.parse_args()
     if args.num_machines == 1:
         args.dist_url = 'tcp://127.0.0.1:{}'.format(12345)

@@ -124,6 +124,30 @@ def get_detection_dataset_dicts_with_source(
 ):
     assert len(dataset_names)
     dataset_dicts = [DatasetCatalog.get(dataset_name) for dataset_name in dataset_names]
+
+    # import json
+    # from tqdm import tqdm
+    # print("start load data!")
+    # drama_json_path = 'datasets/coco/annotations/captions_train2017.json'
+    # with open(drama_json_path, 'r') as json_file:
+    #     json_lists = json.load(json_file)
+    # for data in tqdm(dataset_dicts[0]):
+    #     for json_data in json_lists['annotations']:
+    #         data['task'] = 'DenseCap'
+    #         if data['image_id'] == json_data['image_id']:
+    #             data['annotations'][0]['object_description'] = json_data['caption']
+    # json_file.close()
+    # print("success load data!")
+    # import pickle
+    # with open('datasets/20231231_dataset_dicts_drama_cocoformat_p_0_3.pkl', 'wb') as f:  
+    #     pickle.dump(dataset_dicts, f)
+    # exit()
+
+    import pickle
+    dataset_dicts = pickle.load(open('datasets/20231231_dataset_dicts_drama_cocoformat_p_0_3.pkl', 'rb')) 
+
+
+
     for dataset_name, dicts in zip(dataset_names, dataset_dicts):
         assert len(dicts), "Dataset '{}' is empty!".format(dataset_name)
     

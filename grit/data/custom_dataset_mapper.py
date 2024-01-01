@@ -51,6 +51,8 @@ class CustomDatasetMapper(DatasetMapper):
 
     def __call__(self, dataset_dict):
         dataset_dict_out = self.prepare_data(dataset_dict)
+        while len(dataset_dict_out["instances"].gt_boxes.tensor) == 0:
+            dataset_dict_out = self.prepare_data(dataset_dict)
 
         # When augmented image is too small, do re-augmentation
         retry = 0
