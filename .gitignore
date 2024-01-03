@@ -60,3 +60,8 @@ _darcs
 /projects/*/datasets
 /models
 /snippet
+/eval/*
+
+# log file
+*.log
+*.out

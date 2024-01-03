@@ -6,4 +6,53 @@ CUDA_VISIBLE_DEVICES=4,5,6,7 nohup python train_deepspeed_drama.py
 
 CUDA_VISIBLE_DEVICES=4,5,6,7 nohup python train_deepspeed.py --num-gpus-per-machine 4 --config-file configs/GRiT_B_DenseCap_drama.yaml --output-dir-name ./output/20240101_drama_b_densecap
 
-CUDA_VISIBLE_DEVICES=4,5,6,7 nohup python train_deepspeed.py --num-gpus-per-machine 4 --config-file configs/GRiT_B_DenseCap_drama.yaml --output-dir-name ./output/20240101_1804_drama_b_densecap
+CUDA_VISIBLE_DEVICES=4,5,6,7 nohup python train_deepspeed.py --num-gpus-per-machine 4 --config-file configs/GRiT_B_DenseCap_drama.yaml
+
+
+CUDA_VISIBLE_DEVICES=6,7 nohup python train_deepspeed.py --num-gpus-per-machine 2 --config-file configs/GRiT_B_DenseCap_drama.yaml --output-dir-name ./output/GPU-2/2024_1_1_10_4_drama_b_densecap
+
+CUDA_VISIBLE_DEVICES=7 nohup python train_deepspeed.py --num-gpus-per-machine 1 --config-file configs/GRiT_B_DenseCap_drama.yaml --output-dir-name ./output/GPU-1/2024_1_2_17_3_drama_b_densecap
+
+CUDA_VISIBLE_DEVICES=3,4,6,7 nohup python train_deepspeed_drama.py --num-gpus-per-machine 4
+
+############################################################
+##################### 30%的数据集比例 #######################
+############################################################
+
+20231231_1728_drama_b_densecap
+4卡,原来的配置文件无改动
+
+20240101_1200_drama_b_densecap
+4卡,修改:IOU_THRESHOLDS: [0.6]等:见Base.yaml
+
+20240101_1804_drama_b_densecap
+4卡,修改:PIXEL_MEAN
+    修改:PIXEL_STD
+
+20240101_2343_drama_b_densecap
+4卡,修改:NUM_CLASSES: 1 -> NUM_CLASSES: 5
+
+2024_1_1_10_6_drama_b_densecap
+2卡,修改:PIXEL_MEAN
+    修改:PIXEL_STD
+
+############################################################
+ 30%的数据集比例,比较1卡与4卡训练时间和结果的区别,两者配置文件无区别
+############################################################
+
+2024_1_3_16_16_drama_b_densecap
+1卡,MAX_ITER: 30000
+    修改:PIXEL_MEAN
+    修改:PIXEL_STD
+    修改:IOU_THRESHOLDS: [0.6]等:见Base.yaml
+
+2024_1_3_18_33_drama_b_densecap
+4卡,MAX_ITER: 30000
+    修改:PIXEL_MEAN
+    修改:PIXEL_STD
+    修改:IOU_THRESHOLDS: [0.6]等:见Base.yaml
+
+############################################################
+##################### 100%的数据集比例 #######################
+############################################################
+

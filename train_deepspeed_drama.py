@@ -50,7 +50,7 @@ from lauch_deepspeed import launch_deepspeed, launch_deepspeed_multinodes
 import warnings
 warnings.filterwarnings("ignore")
 
-os.environ["CUDA_VISIBLE_DEVICES"] = '3'
+# os.environ["CUDA_VISIBLE_DEVICES"] = '0,1,2,3,4,5,6,7'
 
 logger = logging.getLogger("detectron2")
 
@@ -261,9 +261,9 @@ if __name__ == "__main__":
     date_now = str(date_now.year) +'_'+ str(date_now.month) +'_'+ str(date_now.day) +'_'+ str(date_now.hour) +'_'+ str(date_now.minute)
     args = default_argument_parser()
     args.add_argument(
-        "--output-dir-name", 
+        "--output-dir-name",
         type=str, 
-        default='./output/' + date_now + '_drama_b_densecap'
+        default='./output/GPU-4/' + date_now + '_drama_b_densecap'
         )
     args.add_argument("--num-gpus-per-machine", type=int, default=1)
     args = args.parse_args()
